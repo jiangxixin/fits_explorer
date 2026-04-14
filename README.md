@@ -1,1 +1,59 @@
-IyBGSVRTIEV4cGxvcmVyCgpBIGxpZ2h0d2VpZ2h0IEZJVFMgZmlsZSBicm93c2VyIHdpdGggU1FMaXRlIGluZGV4aW5nIGFuZCBJbUd1aSBVSS4KCiMjIEZlYXR1cmVzCgotICoqUmVjdXJzaXZlIGZvbGRlciBzY2FubmluZyoqIGZvciBgLmZpdHNgLCBgLmZpdGAsIGAuZnRzYCBmaWxlcwotICoqRnVsbCBIRFUgaGVhZGVyIGV4dHJhY3Rpb24qKiB2aWEgY2ZpdHNpbwotICoqVGh1bWJuYWlsIGdlbmVyYXRpb24qKiB3aXRoIGJpbGluZWFyIGRvd25zYW1wbGluZyArIGhpc3RvZ3JhbSBzdHJldGNoCi0gKipTUUxpdGUgV0FMIG1vZGUqKiBmb3IgZmFzdCBjb25jdXJyZW50IHJlYWRzCi0gKipCYWNrZ3JvdW5kIHRocmVhZGluZyoqIGZvciBub24tYmxvY2tpbmcgaW5kZXhpbmcKLSAqKkdyaWQgdmlldyoqIHdpdGggYWRqdXN0YWJsZSB0aHVtYm5haWwgc2l6ZQoKIyMgQXJjaGl0ZWN0dXJlCgpgYGAKZml0c19leHBsb3Jlci8K4pSc4pSA4pSAIHNyYy8K4pSCICAg4pSc4pSA4pSAIGRhdGFiYXNlLyAgICAgICMgU1FMaXRlIHNjaGVtYTogZmlsZXMsIGhkdXMsIHRodW1ibmFpbHMK4pSCICAg4pSc4pSA4pSAIGluZGV4ZXIvICAgICAgICAjIFJlY3Vyc2l2ZSBGSVRTIHNjYW5uZXIgdXNpbmcgY2ZpdHNpbwrilIIgICDilJzilIDilIAgdGh1bWJuYWlsLyAgICAgICMgUkdCQSB0aHVtYm5haWwgZ2VuZXJhdGlvbgrilIIgICDilJzilIDilIAgdWkvICAgICAgICAgICAgIyBJbUd1aS1iYXNlZCBpbnRlcmZhY2UK4pSCICAg4pSU4pSA4pSAIGFwcC5jcHAgICAgICAgICMgTWFpbiBhcHBsaWNhdGlvbiArIGNhbGxiYWNrcwrilJTilIDilIAgQ01ha2VMaXN0cy50eHQKYGBgCgojIyBCdWlsZAoKIyMjIERlcGVuZGVuY2llcwoKYGBgYmFzaApicmV3IGluc3RhbGwgY2ZpdHNpbyBnbGZ3IHNxbGl0ZTMKYGBgCgpJbUd1aSBhbmQgSW1HdWlGaWxlRGlhbG9nIGFyZSBmZXRjaGVkIHZpYSBDTWFrZSBGZXRjaENvbnRlbnQuCgojIyMgQ29tcGlsZQoKYGBgYmFzaApta2RpciBidWlsZCAmJiBjZCBidWlsZApjbWFrZSAuLiAtRENNQUtFX0JVSUxEX1RZUEU9UmVsZWFzZQptYWtlIC1qJChucHJvYykKLi9maXRzX2V4cGxvcmVyIFtkYXRhYmFzZV9wYXRoXQpgYGAKCkRlZmF1bHQgZGF0YWJhc2U6IGB+Ly5maXRzX2V4cGxvcmVyLmRiYAoKIyMgVXNhZ2UKCjEuIENsaWNrICoq8J+TgiBPcGVuIEZvbGRlcioqIG9yIHByZXNzIGBDdHJsK09gCjIuIFdhaXQgZm9yIGJhY2tncm91bmQgaW5kZXhpbmcgdG8gY29tcGxldGUKMy4gQ2xpY2sgZmlsZXMgdG8gdmlldyBIRFUgZGV0YWlscyBpbiB0aGUgcmlnaHQgcGFuZWwKNC4gVXNlIHRoZSBzZWFyY2ggYmFyIHRvIGZpbHRlciBieSBmaWxlbmFtZQoKIyMgQ29udHJvbHMKCi0gYEN0cmwrT2Ag4oCUIE9wZW4gZm9sZGVyCi0gYEN0cmwrRmAg4oCUIFRvZ2dsZSBzZWFyY2gKLSBgQ3RybCtSYCDigJQgUmVpbmRleCBhbGwgZmlsZXMK
+# FITS Explorer
+
+A lightweight FITS file browser with SQLite indexing and ImGui UI.
+
+## Features
+
+- **Recursive folder scanning** for `.fits`, `.fit`, `.fts` files
+- **Full HDU header extraction** via cfitsio
+- **Thumbnail generation** with bilinear downsampling + histogram stretch
+- **SQLite WAL mode** for fast concurrent reads
+- **Background threading** for non-blocking indexing
+- **Grid view** with adjustable thumbnail size
+
+## Architecture
+
+```
+fits_explorer/
+├── src/
+│   ├── database/      # SQLite schema: files, hdus, thumbnails
+│   ├── indexer/        # Recursive FITS scanner using cfitsio
+│   ├── thumbnail/      # RGBA thumbnail generation
+│   ├── ui/            # ImGui-based interface
+│   └── app.cpp        # Main application + callbacks
+└── CMakeLists.txt
+```
+
+## Build
+
+### Dependencies
+
+```bash
+brew install cfitsio glfw sqlite3
+```
+
+ImGui and ImGuiFileDialog are fetched via CMake FetchContent.
+
+### Compile
+
+```bash
+mkdir build && cd build
+cmake .. -DCMAKE_BUILD_TYPE=Release
+make -j$(nproc)
+./fits_explorer [database_path]
+```
+
+Default database: `~/.fits_explorer.db`
+
+## Usage
+
+1. Click **📂 Open Folder** or press `Ctrl+O`
+2. Wait for background indexing to complete
+3. Click files to view HDU details in the right panel
+4. Use the search bar to filter by filename
+
+## Controls
+
+- `Ctrl+O` — Open folder
+- `Ctrl+F` — Toggle search
+- `Ctrl+R` — Reindex all files
