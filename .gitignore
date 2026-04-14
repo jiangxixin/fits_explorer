@@ -1,5 +1,0 @@
-build/
-*.db
-*.exe
-.DS_Store
-CMakeUserPresets.json
